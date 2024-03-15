@@ -1,4 +1,7 @@
-export interface Task {
+import { IsNotEmpty, IsString } from "class-validator"
+
+export class Task {
+  @IsString()
   description: string
 }
 

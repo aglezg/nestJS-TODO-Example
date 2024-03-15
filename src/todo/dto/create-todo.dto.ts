@@ -1,5 +1,6 @@
-import { IsArray, IsNotEmpty, IsString } from "class-validator"
+import { IsArray, IsNotEmpty, IsOptional, IsString, ValidateNested } from "class-validator"
 import { Task } from "../entities/todo.entity"
+import { Type } from "class-transformer"
 
 export class CreateTodoDto {
   
@@ -8,6 +9,9 @@ export class CreateTodoDto {
   description: string
 
   @IsArray()
-  tasks: Task[]
+  @IsOptional()
+  @ValidateNested( {each: true})
+  @Type( () => Task)
+  tasks?: Task[]
 
 }
