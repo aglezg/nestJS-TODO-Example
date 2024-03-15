@@ -34,8 +34,23 @@ export class TodoService {
     else return todo ;
   }
 
-  update(id: number, updateTodoDto: UpdateTodoDto) {
-    return `This action updates a #${id} todo`;
+  update(id: number, updateTodoDto: UpdateTodoDto): Todo {
+
+    const {done, description, tasks} = updateTodoDto
+
+    const todo: Todo | undefined = this.findOne(id)
+
+    if ( done !== undefined) todo.done = done
+    if (description) todo.description = description
+    if (tasks) todo.tasks = tasks
+
+    this.todos = this.todos.map((dbTodo) => {
+      if (dbTodo === todo) return todo
+      else                 return dbTodo
+    })
+
+    return todo
+
   }
 
   remove(id: number) {
